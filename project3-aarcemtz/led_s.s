@@ -30,19 +30,19 @@ greenVal:
 led_init:
 	bis LEDS, P1DIR
 	mov #1, led_changed
-	call #led_update
+	call led_update()
 
 led_update:
 	cmp #1, led_changed
 	JNZ out
 	mov &redVal, r12
 	mov &greenVal, r13
-	bis red_on(r12), ledFlags
-	bis green_on(r13), ledFLags
+	bis 0(r12), ledFlags
+	bis 0(r13), ledFLags
 	xor 0xff, LEDS
-	bis LEDS, r14
+	or LEDS, r14
 	and r14, P1OUT
-	bis ledFLags, P1OUT
+	or ledFLags, P1OUT
 	mov #0, led_changed
 out:
 
